@@ -1,4 +1,4 @@
-<?php require_once('header.php'); ?>
+<?php require_once('view/header.php'); ?>
+<p>Oi!</p>
 
-
-<?php require_once('footer.php'); ?>
+<?php require_once('view/footer.php'); ?>
