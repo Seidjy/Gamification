@@ -9,4 +9,8 @@ class Metas{
 		$this->regraDeLimitar = $limitar;
 		$this->regraDePremiar = $regraDeCumprir;
 	}
+
+	function createMetas(){
+		
+	}
 }
