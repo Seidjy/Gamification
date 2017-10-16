@@ -57,8 +57,30 @@ descricao varchar(30) not null,
 constraint pkTipoRecompensa primary key (id)
 );
 
+create table clientes(
+idPessoa int not null unique,
+pontos int not null,
+constraint pkClientes primary key (idPessoa),
+constraint fkPessoa foreign key (idPessoa) 
+);
+
+create table transacoes(
+id int not null auto_increment,
+cliente
+);
+
+create table pessoa(
+id int not null auto_increment,
+nome varchar(30) not null,
+sobrenome varchar(30) not null,
+cpf int not null,
+
+);
+
 drop table meta;
 drop table regraParaCumprir;
 drop table regraParaLimitar;
 drop table regraParaRecompensar;
+drop table clientes;
+
 
