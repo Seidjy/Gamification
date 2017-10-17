@@ -63,7 +63,6 @@ pontos int not null,
 constraint pkClientes primary key (idPessoa),
 constraint fkPessoa foreign key (idPessoa) 
 );
-
 create table transacoes(
 id int not null auto_increment,
 cliente
@@ -82,5 +81,8 @@ drop table regraParaCumprir;
 drop table regraParaLimitar;
 drop table regraParaRecompensar;
 drop table clientes;
+drop table requisitos;
+drop table tiporecompensa;
+drop table tipolimite;
 
 
