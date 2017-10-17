@@ -2,22 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Goals;
+use App\RulesToAchieve;
 use Illuminate\Http\Request;
 
-class GoalsController extends Controller
+class RulesToAchievesController extends Controller
 {
-
-	public function index()
-    {
-        $members = Member::latest()->paginate(10);
-        return view('goals.index',compact('members'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-    }
-
     protected function create(array $data)
     {
-        return Goals::create([
+        return RulesToAchieve::create([
             'name' => $data['name'],
             'idRuleToAchieve' => $data['idRuleToAchieve'],
             'idRuleToRestrict' => $data['idRuleToRestrict'], 
