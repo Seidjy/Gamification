@@ -15,6 +15,7 @@ class CreateRulesToRestrictsTable extends Migration
     {
         Schema::create('rules_to_restricts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name',40);
             $table->integer('idTypeRestrict')->unsigned();;
             $table->integer('amount');
             $table->timestamps();

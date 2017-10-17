@@ -15,6 +15,7 @@ class CreateRulesToAwardsTable extends Migration
     {
         Schema::create('rules_to_awards', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name',40);
             $table->integer('idTypeAward')->unsigned();;
             $table->integer('amount');
             $table->timestamps();

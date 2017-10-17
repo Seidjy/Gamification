@@ -15,6 +15,7 @@ class CreateRulesToAchievesTable extends Migration
     {
         Schema::create('rules_to_achieves', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name',40);
             $table->integer('idTypeAchieve')->unsigned();;
             $table->integer('amount');
             $table->boolean('gather');
