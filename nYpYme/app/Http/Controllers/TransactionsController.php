@@ -1,0 +1,42 @@
+<?php 
+namespace App\Http\Controllers;
+
+use App\Transactions;
+use Illuminate\Http\Request;
+
+class TransactionsController extends Controller
+{
+
+    public function index()
+    {
+        $members = Member::latest()->paginate(10);
+        return view('goals.index',compact('members'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    protected function create(array $data)
+    {
+
+        $goals = getGoals();
+
+        foreach ($goals as $rule => $value) {
+            # code...
+        }
+        for(){
+           $data['costumer']
+        }
+
+
+        return Goals::create([
+            'name' => $data['name'],
+            'idRuleToAchieve' => $data['idRuleToAchieve'],
+            'idRuleToRestrixct' => $data['idRuleToRestrict'], 
+            'idRuleToAward'=> $data['idRuleToAward'],
+        ]);
+
+        
+    }
+}
+
+
+ ?>
