@@ -1,13 +1,12 @@
-<?php 
+<?php
+
 namespace App\Http\Controllers;
 
-use App\Transactions;
 use Illuminate\Http\Request;
 
-class TransactionsController extends Controller
+class TransactionController extends Controller
 {
-
-    public function index()
+	public function index()
     {
         $members = Member::latest()->paginate(10);
         return view('goals.index',compact('members'))
@@ -18,7 +17,7 @@ class TransactionsController extends Controller
     {
 
         
-        
+
         foreach ($goals as $rule => $value) {
             
         }
@@ -34,6 +33,3 @@ class TransactionsController extends Controller
         
     }
 }
-
-
- ?>
