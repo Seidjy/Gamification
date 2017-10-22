@@ -16,9 +16,9 @@ class CreateGoalsTable extends Migration
         Schema::create('goals', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 40);
-            $table->integer('idRuleToAchieve')->unsigned();;
-            $table->integer('idRuleToRestrict')->unsigned();;
-            $table->integer('idRuleToAward')->unsigned();;
+            $table->integer('idRuleToAchieve')->unsigned();
+            $table->integer('idRuleToRestrict')->unsigned();
+            $table->integer('idRuleToAward')->unsigned();
             $table->timestamps();
             $table->foreign('idRuleToAchieve')->references('id')->on('rules_to_achieves');
             $table->foreign('idRuleToRestrict')->references('id')->on('rules_to_restricts');

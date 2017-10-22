@@ -1,14 +1,52 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Goals;
+use App\Deal;
 use Illuminate\Http\Request;
 
-class GoalsController extends Controller
+//Transações
+
+class DealsController extends Controller
 {
-    //index
-    protected function index()
+
+    public function index()
+    {
+        $members = Member::latest()->paginate(10);
+        return view('deals.index',compact('members'));
+    }
+
+    protected function create(array $data)
+    {
+
+        $deal = Deals::create([
+            'idCustomer' =>,
+            'idTypeTransactions' => ,
+            'amount' =>,
+        ]);
+
+        $customerGoals = DB::table('customer_goals')->get();
+
+        foreach ($customerGoals as $customerGoal) {
+            $goals = DB::table('goals')->get();
+            foreach ($goals as $goal) {
+                $idRuleToRestrict = $goal->idRuleToRestrict;
+                $ruleToRestrict = DB::table('rules_to_restricts')->where('id', "$idRuleToRestrict");
+                $lastDate = date_parse($customerGoal->updated_at);
+                $todays = date_parse($_SERVER['REQUEST_TIME']);
+
+                $restriction = $lastDate - $todays;
+                
+                if ($restriction >= $ruleToRestrict->amount) {
+                    
+                }
+            }
+
+        }
+        
+
+    }
+
+    public function index()
     {
         $members = Member::latest()->paginate(10);
         return view('goals.index',compact('members'));
@@ -16,9 +54,9 @@ class GoalsController extends Controller
     //create
     protected function create()
     {
-        return view('goals.create');
+        return view('Goals.create');
     }
-     //store
+    //store
     protected function store(Request $request)
     {
             request()->validate([
@@ -62,9 +100,13 @@ class GoalsController extends Controller
     //destroy
     protected function destroy($id)
     {
-        Goals::find($id)->delete();
-        return redirect()->
-        route('goals.index')->
-        with('success','goals deleted successfully');
+        return Goals::destroy([
+            Goals::find($id)->delete();
+            return redirect()->route('goals.index')
+                            ->with('success','goals deleted successfully');
+        ]);
     }
 }
+
+
+ ?>
