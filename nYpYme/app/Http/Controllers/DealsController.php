@@ -19,9 +19,9 @@ class DealsController extends Controller
     {
 
         $deal = Deals::create([
-            'idCustomer' =>,
-            'idTypeTransactions' => ,
-            'amount' =>,
+            'idCustomer' => $data[''],
+            'idTypeTransactions' => $data[''],
+            'amount' => $data['amount'],
         ]);
 
         $customerGoals = DB::table('customer_goals')->get();
@@ -37,7 +37,9 @@ class DealsController extends Controller
                 $restriction = $lastDate - $todays;
                 
                 if ($restriction >= $ruleToRestrict->amount) {
-                    
+
+                    $idRuleToAchieve = 
+                    $achieve = DB::table('rules_to_restricts')->where('id', "$idRuleToRestrict");
                 }
             }
 
