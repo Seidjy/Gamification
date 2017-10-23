@@ -18,5 +18,11 @@ Route::resource('deal','DealsController');
 
 Route::resource('goals','GoalsController');
 
-//Route::resource('deal','DealsController');
+Route::resource('achieve','RulesToAchievesController');
+
+Route::resource('awards','RulesToAwardsController');
+
+Route::resource('restricts','RulesToRestrictsController');
+
+Route::resource('customers','CustomerController');
 

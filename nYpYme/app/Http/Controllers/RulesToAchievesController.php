@@ -4,54 +4,53 @@ namespace App\Http\Controllers;
 
 use App\RulesToAchieve;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RulesToAchievesController extends Controller
 {
 	//index
-	protected function index(array $data)
+	protected function index()
     {
-    	return RulesToAchieves::index([
-	        $data = RulesToAchieves::latest()->paginate(5);
-	        return view('rulesToAchieves.index',compact('articles'));
-	    ]);
+	        $achieve = RulesToAchieve::latest()->paginate(5);
+	        return view('achieve.index',compact('achieve'));
 	}
 	//create
     protected function create()
     {
-        return view('RulesToAchieves.create');
+        return view('achieve.create');
     }
     //store
     protected function store(Request $request)
     {
-        RulesToAchieves::create($request->all());
-            return redirect()->route('rulesToAchieves.index')
+        RulesToAchieve::create($request->all());
+            return redirect()->route('achieve.index')
 	                        ->with('success','rulesToAchieves created successfully');
 
 	}
     //show
     protected function show($id)
     {
-        $article = RulesToAchieves::find($id);
-        return view('rulesToAchieves.show',compact('article'));
+        $article = RulesToAchieve::find($id);
+        return view('achieve.show',compact('article'));
     }
     //edit
     public function edit($id)
     {
-        $article = RulesToAchieves::find($id);
-        return view('rulesToAchieves.edit',compact('article'));
+        $article = RulesToAchieve::find($id);
+        return view('achieve.edit',compact('article'));
     }
     //update
     public function update(Request $request, $id)
     {
-        RulesToAchieves::find($id)->update($request->all());
-        return redirect()->route('rulesToAchieves.index')
+        RulesToAchieve::find($id)->update($request->all());
+        return redirect()->route('achieve.index')
                         ->with('success','rulesToAchieves updated successfully');
     }
     //destroy
     protected function destroy($id)
     {
-        RulesToAchieves::find($id)->delete();
-	        return redirect()->route('rulesToAchieves.index')
+        RulesToAchieve::find($id)->delete();
+	        return redirect()->route('achieve.index')
 	        ->with('success','rulesToAchieves deleted successfully');
 
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use App\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -9,37 +11,37 @@ class CustomerController extends Controller
     protected function index()
     {
         $members = Customer::latest()->paginate(10);
-        return view('goals.index',compact('members'));
+        return view('customers.index',compact('members'));
     }
     //create
     protected function create()
     {
-        return view('goals.create');
+        return view('customers.create');
     }
      //store
     protected function store(Request $request)
     {
         Customer::create($request->all());
-        return redirect()->route('goals.index')
+        return redirect()->route('customers.index')
                 ->with('success','goals created successfully');
     }
     //show
     protected function show($id)
     {
         $members = Customer::find($id);
-        return view('goals.show',compact('members'));
+        return view('customers.show',compact('members'));
     }
     //edit
     public function edit($id)
     {
         $members = Customer::find($id);
-        return view('goals.edit',compact('members'));
+        return view('customers.edit',compact('members'));
     }
     //update
     public function update(Request $request, $id)
     {
         Customer::find($id)->update($request->all());
-        return redirect()->route('goals.index')
+        return redirect()->route('customers.index')
                         ->with('success','goals updated successfully');
     }
     //destroy
@@ -47,7 +49,7 @@ class CustomerController extends Controller
     {
         Customer::find($id)->delete();
         return redirect()->
-        route('goals.index')->
+        route('customers.index')->
         with('success','goals deleted successfully');
     }
 }

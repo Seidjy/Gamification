@@ -1,56 +1,57 @@
 <?php
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 
-use App\RulesToAwards;
+use App\RulesToAward;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RulesToAwardsController extends Controller
 {
 	//index
-	protected function index(array $data)
+	protected function index()
     {
-	        $data = RulesToAwards::latest()->paginate(5);
-	        return view('rulesToAwards.index',compact('articles'));
+	        $data = RulesToAward::latest()->paginate(5);
+	        return view('awards.index',compact('data'));
 
 	}
 	//create
     protected function create()
     {
-        return view('RulesToAwards.create');
+        return view('awards.create');
     }
     //store
     protected function store(Request $request)
     {
-	        RulesToAwards::create($request->all());
-	        return redirect()->route('rulesToAwards.index')
+	        RulesToAward::create($request->all());
+	        return redirect()->route('awards.index')
 	                        ->with('success','rulesToAwards created successfully');
 
 	}
     //show
     protected function show($id)
     {
-        $article = RulesToAwards::find($id);
-        return view('rulesToAwards.show',compact('article'));
+        $article = RulesToAward::find($id);
+        return view('awards.show',compact('article'));
     }
     //edit
     public function edit($id)
     {
-        $article = RulesToAwards::find($id);
-        return view('rulesToAwards.edit',compact('article'));
+        $article = RulesToAward::find($id);
+        return view('awards.edit',compact('article'));
     }
     //update
     public function update(Request $request, $id)
     {
-        RulesToAwards::find($id)->update($request->all());
-        return redirect()->route('rulesToAwards.index')
-                        ->with('success','rulesToAwards updated successfully');
+        RulesToAward::find($id)->update($request->all());
+        return redirect()->route('awards.index')
+                        ->with('success','awards updated successfully');
     }
     //destroy
     protected function destroy($id)
     {
-	    RulesToAwards::find($id)->delete();
-	    return redirect()->route('rulesToAwards.index')
+	    RulesToAward::find($id)->delete();
+	    return redirect()->route('awards.index')
                     ->with('success','Rule deleted successfully');
     }
 

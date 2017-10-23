@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Deal;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class DealsController extends Controller
 
     public function index()
     {
-        $members = Member::latest()->paginate(10);
+        $members = Deal::latest()->paginate(10);
         return view('deals.index',compact('members'));
     }
 
@@ -20,20 +21,20 @@ class DealsController extends Controller
 
         //PRECISA PERMITIR COMPLETAR VÁRIAS VEZES A MESMA META
 
-        $deal = Deals::create([
+        $deal = Deal::create([
             'idCustomer' => $data['idCustomer'],
             'idTypeTransactions' => $data['idTypeTransactions'],
             'amount' => $data['amount'],
         ]);
 
-        $customerGoals = DB::table('customer_goals')->where('id', "$data['idCustomer']")->get();
+        $customerGoals = DB::table('customer_goals')->where('id', $data["idCustomer"])->get();
 
         foreach ($customerGoals as $customerGoal) {
             $customerGoalsAmountRestrict;
             $goals = DB::table('goals')->get();
             foreach ($goals as $goal) {
                 $idRuleToRestrict = $goal->idRuleToRestrict;
-                $ruleToRestrict = DB::table('rules_to_restricts')->where('id', "$idRuleToRestrict")->first();
+                $ruleToRestrict = DB::table('rules_to_restricts')->where('id', $idRuleToRestrict)->first();
                 $lastDate = date_parse($customerGoal->updated_at);
                 $todays = date_parse($_SERVER['REQUEST_TIME']);
 
@@ -42,7 +43,7 @@ class DealsController extends Controller
                 if ($restriction >= $ruleToRestrict->amount) {
 
                     $idRuleToAchieve = $goal->idRuleToAchieve;
-                    $achieve = DB::table('rules_to_achieves')->where('id', "$idRuleToAchieve")first();
+                    $achieve = DB::table('rules_to_achieves')->where('id', $idRuleToAchieve)->first();
 
                     if ($achieve->gather) {
                         if ($data['amount'] + $customerGoal->amountStored >= $achieve->amount) {
@@ -69,12 +70,6 @@ class DealsController extends Controller
         }
         return redirect()->route('deals.index')
                             ->with('success','deals created successfully');
-    }
-
-    public function index()
-    {
-        $members = Deal::latest()->paginate(10);
-        return view('deals.index',compact('members'));
     }
 
     //create
@@ -106,10 +101,10 @@ class DealsController extends Controller
     protected function destroy($id)
     {
         return Deal::destroy([
-            Deal::find($id)->delete();
+            Deal::find($id)->delete()]);
             return redirect()->route('deals.index')
                             ->with('success','deals deleted successfully');
-        ]);
+
     }
 }
 
