@@ -14,20 +14,33 @@ class GoalsController extends Controller
         $members = Goal::latest()->paginate(10);
         return view('goals.index',compact('members'));
     }
+
     //create
     protected function create(){
         return view('goals.create');
     }
+
      //store
     protected function store(Request $request)
     {
-        Goal::create($request->all());
+        $goal = Goal::create($request->all());
 
-        $customers = DB::
+        $customers = DB::table('customers')->get();
+
+        foreach ($customers as $customer) {
+           DB::table('users')->insert([
+                'idGoals' => $goal->id,
+                'idCustomers' => $customer->id,
+                'amountRestrict' => 0,
+                'amountStored' => 0,
+            ]
+            );
+        }
 
         return redirect()->route('goals.index')
                 ->with('success','goals created successfully');
     }
+    
     //show
     protected function show($id)
     {

@@ -22,8 +22,19 @@ class CustomerController extends Controller
     protected function store(Request $request)
     {
         Customer::create($request->all());
+
+        $goals = DB::table('goals')->get();
+
+        foreach ($goals as $goal) {
+           DB::table('users')->insert([
+                'idGoals' => $goal->id,
+                'idCustomers' => $customer->id,
+                'amountRestrict' => 0,
+                'amountStored' => 0,
+            );
+        }
         return redirect()->route('customers.index')
-                ->with('success','goals created successfully');
+                ->with('success','customers created successfully');
     }
     //show
     protected function show($id)

@@ -52,5 +52,6 @@ class RulesToRestrictsController extends Controller
         RulesToRestrict::find($id)->delete();
         return redirect()->route('restricts.index')
 	                        ->with('success','rulesToRestricts deleted successfully');
+
     }
 }
