@@ -12,14 +12,25 @@ class GoalsController extends Controller
     protected function index()
     {
         $members = Goal::latest()->paginate(10);
-        return view('goals.index',compact('members'));
+        return view('goals.evento_list',compact('members'));
     }
 
     //create
+    
     protected function create(){
-        return view('goals.create');
-    }
 
+        $achieves = DB::table('rules_to_achieves')->get();
+
+        $restricts = DB::table('rules_to_restricts')->get();
+
+        $awards = DB::table('rules_to_awards')->get();
+
+        return view('goals.evento_cadastro',['awards' => $awards,
+            'achieves' => $achieves,
+            'restricts' => $restricts,
+    ]);
+    }
+    
      //store
     protected function store(Request $request)
     {
@@ -37,11 +48,13 @@ class GoalsController extends Controller
             );
         }
 
-        return redirect()->route('goals.index')
-                ->with('success','goals created successfully');
+        $goals = DB::table('goals')->get();
+
+        return view('goals.evento_list', ['goals' => $goals]);
     }
     
     //show
+    /*
     protected function show($id)
     {
         $members = Goal::find($id);
@@ -53,6 +66,7 @@ class GoalsController extends Controller
         $members = Goal::find($id);
         return view('goals.edit',compact('members'));
     }
+
     //update
     public function update(Request $request, $id)
     {
@@ -60,7 +74,9 @@ class GoalsController extends Controller
         return redirect()->route('goals.index')
                         ->with('success','goals updated successfully');
     }
+    */
     //destroy
+    /*
     protected function destroy($id)
     {
         Goal::find($id)->delete();
@@ -68,4 +84,5 @@ class GoalsController extends Controller
         route('goals.index')->
         with('success','goals deleted successfully');
     }
+    */
 }

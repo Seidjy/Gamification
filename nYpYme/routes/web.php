@@ -14,6 +14,17 @@
 Route::get('/', function () {
     return view('home');
 });
+
+/*
+Route::get('/goals', function () {
+    return view('evento_list');
+});
+
+Route::get('/goals/create', function () {
+    return view('evento_list');
+});
+*/
+
 Route::resource('deal','DealsController');
 
 Route::resource('goals','GoalsController');

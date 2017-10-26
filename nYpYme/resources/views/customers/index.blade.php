@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-Ae
-</body>
-</html>
+@extends('app')
+
+@section('conteudo')
+	    <h2 class="titulo">Lista de Clientes</h2>
+
+	<?php //$clientes = array(); ?>
+
+{{--@foreach ($clientes as $cliente)--}}
+	    <ul class="list-group margem">
+	  		<li class="list-group-item"><span class="badge client">434{{--{{ $cliente->id }}--}}
+	  		</span>Cliente {{--{{ $cliente->nome }}--}}</li>
+		</ul>
+{{--@endforeach--}}
+@endsection

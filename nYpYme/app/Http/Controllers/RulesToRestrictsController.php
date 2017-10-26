@@ -12,21 +12,23 @@ class RulesToRestrictsController extends Controller
 	protected function index()
     {
         $data = RulesToRestrict::latest()->paginate(5);
-        return view('restricts.index',compact('articles'));
+        return view('restricts.index',compact('data'));
 	}
 	//create
     protected function create()
     {
-        return view('restricts.create');
+        $typeRestrict = DB::table('type_restricts')->get();
+        return view('restricts.limitacao_def', ['restricts' => $typeRestrict]);
     }
+
     //store
     protected function store(Request $request)
     {
 	        RulesToRestrict::create($request->all());
-	        return redirect()->route('restricts.index')
-	                        ->with('success','rulesToRestricts created successfully');
+	        return view('home');
 
 	}
+
     //show
     protected function show($id)
     {

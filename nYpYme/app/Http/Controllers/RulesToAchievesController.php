@@ -17,15 +17,14 @@ class RulesToAchievesController extends Controller
 	//create
     protected function create()
     {
-        return view('achieve.create');
+        $achieves = DB::table('type_achieves')->get();
+        return view('achieve.evento_requisito', ['achieves' => $achieves]);
     }
     //store
     protected function store(Request $request)
     {
         RulesToAchieve::create($request->all());
-            return redirect()->route('achieve.index')
-	                        ->with('success','rulesToAchieves created successfully');
-
+            return view('home');
 	}
     //show
     protected function show($id)

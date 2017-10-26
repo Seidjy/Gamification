@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class RulesToRestrict extends Model
 {
+	protected $table = 'rules_to_restricts';
     protected $fillable = [
-        'name','idTypeRestrict','amount'
+        'name','idTypeRestrict','amount',
     ];
+
+    public function type_restrict()
+    {
+        return $this->hasOne('App\TypeRestrict');
+    }
 }

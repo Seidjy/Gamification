@@ -12,34 +12,38 @@ class RulesToAwardsController extends Controller
 	protected function index()
     {
 	        $data = RulesToAward::latest()->paginate(5);
-	        return view('awards.index',compact('data'));
+	        return view('awards.index', compact('data'));
 
 	}
 	//create
     protected function create()
     {
-        return view('awards.create');
+        $typeAwards = DB::table('type_awards')->get();
+        return view('awards.evento_recompensa', ['awards' => $typeAwards]);
     }
+
     //store
     protected function store(Request $request)
     {
 	        RulesToAward::create($request->all());
-	        return redirect()->route('awards.index')
-	                        ->with('success','rulesToAwards created successfully');
+	        return view('home');
 
 	}
+
     //show
     protected function show($id)
     {
         $article = RulesToAward::find($id);
         return view('awards.show',compact('article'));
     }
+
     //edit
     public function edit($id)
     {
         $article = RulesToAward::find($id);
         return view('awards.edit',compact('article'));
     }
+
     //update
     public function update(Request $request, $id)
     {
@@ -54,6 +58,4 @@ class RulesToAwardsController extends Controller
 	    return redirect()->route('awards.index')
                     ->with('success','Rule deleted successfully');
     }
-
-
 }

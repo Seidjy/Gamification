@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
@@ -10,8 +9,8 @@ class CustomerController extends Controller
 {
     protected function index()
     {
-        $members = Customer::latest()->paginate(10);
-        return view('customers.index',compact('members'));
+        $members = DB::table('customers')->get();
+        return view('customers.index',['clientes' => $members]);
     }
     //create
     protected function create()
@@ -31,7 +30,7 @@ class CustomerController extends Controller
                 'idCustomers' => $customer->id,
                 'amountRestrict' => 0,
                 'amountStored' => 0,
-            );
+            ]);
         }
         return redirect()->route('customers.index')
                 ->with('success','customers created successfully');
@@ -48,6 +47,7 @@ class CustomerController extends Controller
         $members = Customer::find($id);
         return view('customers.edit',compact('members'));
     }
+
     //update
     public function update(Request $request, $id)
     {
@@ -55,6 +55,7 @@ class CustomerController extends Controller
         return redirect()->route('customers.index')
                         ->with('success','goals updated successfully');
     }
+
     //destroy
     protected function destroy($id)
     {

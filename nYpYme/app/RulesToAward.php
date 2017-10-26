@@ -9,4 +9,8 @@ class RulesToAward extends Model
     protected $fillable = [
         'name','idTypeAward','amount',
     ];
+    public function type_award()
+    {
+        return $this->hasOne('App\TypeAward');
+    }
 }

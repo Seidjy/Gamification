@@ -13,18 +13,22 @@ class DealsController extends Controller
     public function index()
     {
         $members = Deal::latest()->paginate(10);
-        return view('deals.index',compact('members'));
+        return view('deals.transacao_def',compact('members'));
     }
 
-    protected function store(array $data)
+    protected function store(Request $data)
     {
 
         //PRECISA PERMITIR COMPLETAR VÁRIAS VEZES A MESMA META
+        $cpf = $request->input('cpf');
+        $customer = DB::table('customer_goals')->where('cpf', $cpf)->first();
 
         $deal = Deal::create([
-            'idCustomer' => $data['idCustomer'],
-            'idTypeTransactions' => $data['idTypeTransactions'],
-            'amount' => $data['amount'],
+            'idCustomer' => $customer->id,
+            'idTypeTransactions' => "C",
+            'amount' => $data->input('amount'),
+            'updated_at' => $data->input('updated_at'),
+            'created_at' => $data->input('created_at'),
         ]);
 
         $customerGoals = DB::table('customer_goals')->where('id', $data["idCustomer"])->get();
@@ -68,14 +72,13 @@ class DealsController extends Controller
                 }
             }           
         }
-        return redirect()->route('deals.index')
-                            ->with('success','deals created successfully');
+        return redirect()->route('deals.index');
     }
 
     //create
     protected function create()
     {
-        return view('deals.create');
+        return view('deals.transacao_def');
     }
 
     //show
