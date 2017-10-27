@@ -3,7 +3,8 @@
 @section('conteudo')
     <h2 class="titulo">Creditar</h2>
 
-    <form action="deals.store" method="POST" role="form" class="fformularios">
+    <form action="{{ route('deal.store') }}" method="POST" role="form" class="fformularios">
+    	<input type="hidden" name="_token" value="{{ csrf_token() }}" >
         <div class="form-group form-contact">
             <input name="cpf" type="text" class="form-control" id="" placeholder="CPF Cliente" required="required">
 

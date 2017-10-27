@@ -25,8 +25,7 @@ class RulesToRestrictsController extends Controller
     protected function store(Request $request)
     {
 	        RulesToRestrict::create($request->all());
-	        return view('home');
-
+	        return redirect()->route('home.index');
 	}
 
     //show

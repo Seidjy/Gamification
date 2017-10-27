@@ -25,6 +25,8 @@ Route::get('/goals/create', function () {
 });
 */
 
+Route::resource('home','HomeController');
+
 Route::resource('deal','DealsController');
 
 Route::resource('goals','GoalsController');

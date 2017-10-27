@@ -26,7 +26,7 @@ class RulesToAwardsController extends Controller
     protected function store(Request $request)
     {
 	        RulesToAward::create($request->all());
-	        return view('home');
+	        return redirect()->route('home.index');
 
 	}
 

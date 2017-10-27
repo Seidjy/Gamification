@@ -12,11 +12,11 @@
                     <option value="{{ $achieve->id}}">{{ $achieve->name}}</option>
                 @endforeach
             </select>
-            <select id="input" name="gather" class="form-control" required="required" placeholder="Definir Limitação">
-                    <option value="false">Não Acumulativo</option>
-                    <option value="true">Acumulativo</option>
+            <select id="input" type="number" name="gather" class="form-control" required="required" placeholder="Definir Limitação">
+                    <option value="0">Não Acumulativo</option>
+                    <option value="1">Acumulativo</option>
             </select>
-            <input type="number" class="form-control" id="" placeholder="Quantidade" required="required">
+            <input name="amount" type="number" class="form-control" id="" placeholder="Quantidade" required="required">
         </div>
         <button type="submit" class="btn btn-primary btn-contact btn-block">Confirmar</button>
     </form>

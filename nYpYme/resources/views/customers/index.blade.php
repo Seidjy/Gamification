@@ -5,10 +5,10 @@
 
 	<?php //$clientes = array(); ?>
 
-{{--@foreach ($clientes as $cliente)--}}
+@foreach ($clientes as $cliente)
 	    <ul class="list-group margem">
-	  		<li class="list-group-item"><span class="badge client">434{{--{{ $cliente->id }}--}}
-	  		</span>Cliente {{--{{ $cliente->nome }}--}}</li>
+	  		<li class="list-group-item"><span class="badge client">{{ $cliente->points }}
+	  		</span>{{ $cliente->cpf }}</li>
 		</ul>
-{{--@endforeach--}}
+@endforeach
 @endsection

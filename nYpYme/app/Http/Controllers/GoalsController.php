@@ -39,11 +39,13 @@ class GoalsController extends Controller
         $customers = DB::table('customers')->get();
 
         foreach ($customers as $customer) {
-           DB::table('users')->insert([
+           DB::table('customer_goals')->insert([
                 'idGoals' => $goal->id,
                 'idCustomers' => $customer->id,
                 'amountRestrict' => 0,
                 'amountStored' => 0,
+                'created_at' => strtotime('01-01-2008'),
+                'updated_at' => strtotime('01-01-2008'),
             ]
             );
         }

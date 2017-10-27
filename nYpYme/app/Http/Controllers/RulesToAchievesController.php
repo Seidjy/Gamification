@@ -24,7 +24,7 @@ class RulesToAchievesController extends Controller
     protected function store(Request $request)
     {
         RulesToAchieve::create($request->all());
-            return view('home');
+            return redirect()->route('home.index');
 	}
     //show
     protected function show($id)

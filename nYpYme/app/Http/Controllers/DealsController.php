@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Deal;
 use Illuminate\Http\Request;
+use DateTime;
 
 //Transações
 
@@ -20,59 +21,84 @@ class DealsController extends Controller
     {
 
         //PRECISA PERMITIR COMPLETAR VÁRIAS VEZES A MESMA META
-        $cpf = $request->input('cpf');
-        $customer = DB::table('customer_goals')->where('cpf', $cpf)->first();
+        $cpf = $data->input('cpf');
+        $customer = DB::table('customers')->where('cpf', $cpf)->first();
 
+        $customerPoints = $customer->points;
         $deal = Deal::create([
             'idCustomer' => $customer->id,
-            'idTypeTransactions' => "C",
+            'idTypeTransactions' => 1,
             'amount' => $data->input('amount'),
             'updated_at' => $data->input('updated_at'),
             'created_at' => $data->input('created_at'),
         ]);
 
-        $customerGoals = DB::table('customer_goals')->where('id', $data["idCustomer"])->get();
-
+        $customerGoals = DB::table('customer_goals')->where('idCustomers', '=', $customer->id)->get();
+        
         foreach ($customerGoals as $customerGoal) {
-            $customerGoalsAmountRestrict;
-            $goals = DB::table('goals')->get();
-            foreach ($goals as $goal) {
+            $customerGoalsAmountRestrict = $customerGoal->amountRestrict;
+            $customerGoalsAmountStored = 0;
+            $goal = DB::table('goals')->where('id', '=', $customerGoal->idGoals)->first();
+         //   foreach ($goals as $goal) {
                 $idRuleToRestrict = $goal->idRuleToRestrict;
                 $ruleToRestrict = DB::table('rules_to_restricts')->where('id', $idRuleToRestrict)->first();
-                $lastDate = date_parse($customerGoal->updated_at);
-                $todays = date_parse($_SERVER['REQUEST_TIME']);
 
-                $restriction = $lastDate - $todays;
+                $lastDate = new DateTime(@"$customerGoal->updated_at");
 
-                if ($restriction >= $ruleToRestrict->amount) {
-
+                $todays = new DateTime(@"$_SERVER->REQUEST_TIME");
+                
+                $restriction = $lastDate->diff($todays);
+                $days = $restriction->format('%I');
+                //var_dump($days);
+                if ($days >= $ruleToRestrict->amount) {
                     $idRuleToAchieve = $goal->idRuleToAchieve;
                     $achieve = DB::table('rules_to_achieves')->where('id', $idRuleToAchieve)->first();
-
+                    var_dump($achieve);
                     if ($achieve->gather) {
-                        if ($data['amount'] + $customerGoal->amountStored >= $achieve->amount) {
+                        if (($data->input('amount') + $customerGoal->amountStored) >= $achieve->amount) {
                             $customerGoalsAmountRestrict = $customerGoal->amountRestrict + 1;
+                            $awards = DB::table('rules_to_awards')
+                            ->where('id', $goal->idRuleToAward)
+                            ->first();
+
+                            $customerPoints = $customerPoints + $awards->amount;
+
+                            DB::table('customers')
+                            ->where('cpf', $cpf)
+                            ->update(['points' => $customerPoints]);
                         }else{
-                            $customerGoalsAmountStored = $data['amount'];
+                            $customerGoalsAmountStored = $data->input('amount');
+                            $todays = $lastDate;
                         }
                         DB::table('customer_goals')
                             ->where('id', "$customerGoal->id")
-                            ->update(['amountRestrict' => "$customerGoalsAmountRestrict",
-                                    'amountStored' => "$customerGoalsAmountStored"
+                            ->update(['amountRestrict' => $customerGoalsAmountRestrict,
+                                    'amountStored' => $customerGoalsAmountStored,
+                                    'updated_at' => $todays,
                             ]);
                     }else{
-                        if ($data['amount'] >= $achieve->amount) {
+                        if ($data->input('amount') >= $achieve->amount) {
+                            $awards = DB::table('rules_to_awards')
+                            ->where('id', $goal->idRuleToAward)
+                            ->first();
+                            $customerPoints = $customerPoints + $awards->amount;
+                            $customer = DB::table('customers')
+                            ->where('cpf', $cpf)
+                            ->update(['points' =>  $customerPoints]);
+
                             $customerGoalsAmountRestrict = $customerGoal->amountRestrict + 1;
                             DB::table('customer_goals')
                             ->where('id', "$customerGoal->id")
                             ->update(['amountRestrict' => $customerGoalsAmountRestrict,
+                                'updated_at' => $todays,
                             ]);
                         }
                     }
                 }
-            }           
+            //}           
         }
-        return redirect()->route('deals.index');
+        $customers = DB::table('customers')->get();
+        return redirect()->route('customers.index');
     }
 
     //create
