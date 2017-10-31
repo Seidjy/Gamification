@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Deal;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
 use DateTime;
 
@@ -23,6 +24,9 @@ class DealsController extends Controller
         //PRECISA PERMITIR COMPLETAR VÁRIAS VEZES A MESMA META
         $cpf = $data->input('cpf');
         $customer = DB::table('customers')->where('cpf', $cpf)->first();
+        if (!$customer) {
+            $customer = CustomerController::addCustomer($cpf, "");
+        }
 
         $customerPoints = $customer->points;
         $deal = Deal::create([

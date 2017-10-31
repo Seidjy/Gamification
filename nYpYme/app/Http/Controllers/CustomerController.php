@@ -35,6 +35,26 @@ class CustomerController extends Controller
         return redirect()->route('customers.index')
                 ->with('success','customers created successfully');
     }
+
+    public static function addCustomer($cpf, $name){
+        $customer = Customer::create([
+            'cpf' => $cpf,
+            'name' => $name,
+        ]);
+
+        $goals = DB::table('goals')->get();
+
+        foreach ($goals as $goal) {
+           DB::table('users')->insert([
+                'idGoals' => $goal->id,
+                'idCustomers' => $customer->id,
+                'amountRestrict' => 0,
+                'amountStored' => 0,
+            ]);
+        }
+        return $customer;
+    }
+
     //show
     protected function show($id)
     {

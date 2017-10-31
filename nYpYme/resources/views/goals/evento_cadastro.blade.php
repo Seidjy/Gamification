@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('conteudo')
-    <h2 class="titulo">Criar Eventos</h2>
+    <h2 class="titulo">Criar Evento</h2>
 
     <form action="{{ route('goals.store') }}" method="POST" role="form" class="fformularios">
         <input type="hidden" name="_token" value="{{ csrf_token() }}" >

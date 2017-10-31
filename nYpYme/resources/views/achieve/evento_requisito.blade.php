@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('conteudo')
-    <h2 class="titulo">Definir Requisito</h2>
+    <h2 class="titulo">Definir Regra para cumprir</h2>
 
     <form action="{{ route('achieve.store') }}" method="POST" role="form" class="fformularios">
         <input type="hidden" name="_token" value="{{ csrf_token() }}" >

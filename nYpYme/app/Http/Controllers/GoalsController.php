@@ -11,8 +11,9 @@ class GoalsController extends Controller
     //index
     protected function index()
     {
-        $members = Goal::latest()->paginate(10);
-        return view('goals.evento_list',compact('members'));
+        $goals = DB::table('goals')->get();
+
+        return view('goals.evento_list', ['goals' => $goals]);
     }
 
     //create
@@ -25,13 +26,14 @@ class GoalsController extends Controller
 
         $awards = DB::table('rules_to_awards')->get();
 
-        return view('goals.evento_cadastro',['awards' => $awards,
+        return view('goals.evento_cadastro',[
+            'awards' => $awards,
             'achieves' => $achieves,
             'restricts' => $restricts,
-    ]);
+        ]);
     }
     
-     //store
+    //store
     protected function store(Request $request)
     {
         $goal = Goal::create($request->all());

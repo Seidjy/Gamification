@@ -63,26 +63,40 @@ pontos int not null,
 constraint pkClientes primary key (idPessoa),
 constraint fkPessoa foreign key (idPessoa) 
 );
-create table transacoes(
-id int not null auto_increment,
-cliente
-);
+
 
 create table pessoa(
 id int not null auto_increment,
 nome varchar(30) not null,
 sobrenome varchar(30) not null,
 cpf int not null,
-
+datanascimento
 );
+create table transacoes(
+id int not null auto_increment,
+cliente
+);
+
 
 drop table meta;
 drop table regraParaCumprir;
 drop table regraParaLimitar;
 drop table regraParaRecompensar;
-drop table clientes;
-drop table requisitos;
-drop table tiporecompensa;
-drop table tipolimite;
+drop table dealsdeals;
+drop table rules_to_achieves;
+drop table migratransactionstions;
+drop table transactions;
 
+insert into type_restricts (name) values ("sem restricao");
 
+update type_restricts set name = "Sem Limitação"  where id = 1;
+
+insert into type_restricts (name) values ("Dias");
+
+insert into type_achieves (name) values ("Valor");
+
+update type_achieves set name = "Valor em Real" where id = 1;
+insert into type_awards (name) values ("Pontos");
+
+insert into customers (cpf, endereco, points) values (44309748880, "Rua João Dal Ponte", 0);
+insert into customers (cpf, endereco, points) values (43940151890, "Queiroz 275", 0);

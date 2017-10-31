@@ -32,11 +32,14 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                 <!--    <li><a href="logar.php">Logar</a></li>
-                    <li><a href="registrar.php">Registrar</a></li> -->
-                    <li><a href="{{ route('goals.create') }}">Cadastrar Meta</a></li>
+                    <li><a href="registrar.php">Registrar</a></li> 
                     <li><a href="{{ route('restricts.create') }}">Cadastrar Regra para Limitar</a></li>
                     <li><a href="{{ route('achieve.create') }}">Cadastrar Regra para Cumprir</a></li>
                     <li><a href="{{ route('awards.create') }}">Cadastrar Regra de Recompensa</a></li>
+                -->
+                    <li><a href="{{ route('goals.index') }}">Lista de Eventos</a></li>
+                    <li><a href="{{ route('goals.create') }}">Cadastrar Evento</a></li>
+                    
                     <li><a href="{{ route('deal.create') }}">Realizar Transação</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
