@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('conteudo')
-	    <h2 class="titulo">Eventos</h2>
+	    <h2 class="titulo">Conquistas</h2>
 
 	<?php //$eventos = array(); ?>
 
@@ -13,5 +13,4 @@
 		</ul>
 @endforeach
 	    <a href="{{ route('goals.create') }}" class="btn btn-primary btn-contact btn-block">+</a>
-	    
 @endsection

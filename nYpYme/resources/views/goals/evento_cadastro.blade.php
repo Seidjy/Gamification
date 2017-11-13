@@ -1,12 +1,12 @@
 @extends('app')
 
 @section('conteudo')
-    <h2 class="titulo">Criar Evento</h2>
+    <h2 class="titulo">Criar Conquista</h2>
 
     <form action="{{ route('goals.store') }}" method="POST" role="form" class="fformularios">
         <input type="hidden" name="_token" value="{{ csrf_token() }}" >
         <div class="form-group form-contact">
-            <input name="name" type="text" class="form-control" id="" placeholder="Nome do Evento" required="required">
+            <input name="name" type="text" class="form-control" id="" placeholder="Nome da Conquista" required="required">
 
             <select name="idRuleToAchieve" id="input" class="form-control" required="required">
             	@foreach ($achieves as $achieve)

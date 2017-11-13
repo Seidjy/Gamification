@@ -38,7 +38,7 @@ class DealsController extends Controller
         ]);
 
         $customerGoals = DB::table('customer_goals')->where('idCustomers', '=', $customer->id)->get();
-        
+
         foreach ($customerGoals as $customerGoal) {
             $customerGoalsAmountRestrict = $customerGoal->amountRestrict;
             $customerGoalsAmountStored = 0;
@@ -105,10 +105,37 @@ class DealsController extends Controller
         return redirect()->route('customers.index');
     }
 
-    //create
-    protected function create()
+    protected function storeCustomer(Request $data){
+        $cpf = $data->input('cpf');
+        $customer = DB::table('customers')->where('cpf', $cpf)->first();
+        if (!$customer) {
+            $customer = CustomerController::addCustomer($cpf, "");
+        }
+
+        $customerPoints = $customer->points;
+        
+    }
+
+    //criar por valor
+    protected function createByValue()
     {
         return view('deals.transacao_def');
+    }
+
+    //criar por evento
+
+    protected function createbyGoal()
+    {
+        return view('deals.transacao_def2');
+    }
+
+    protected function storeByGoal(Request $request){
+        $this->storeCustomer();
+    }
+
+    protected function add()
+    {
+        return view('deals.transacao_def_goals');
     }
 
     //show
@@ -137,9 +164,6 @@ class DealsController extends Controller
             Deal::find($id)->delete()]);
             return redirect()->route('deals.index')
                             ->with('success','deals deleted successfully');
-
     }
 }
-
-
  ?>

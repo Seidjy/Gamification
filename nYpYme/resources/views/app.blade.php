@@ -37,8 +37,8 @@
                     <li><a href="{{ route('achieve.create') }}">Cadastrar Regra para Cumprir</a></li>
                     <li><a href="{{ route('awards.create') }}">Cadastrar Regra de Recompensa</a></li>
                 -->
-                    <li><a href="{{ route('goals.index') }}">Lista de Eventos</a></li>
-                    <li><a href="{{ route('goals.create') }}">Cadastrar Evento</a></li>
+                    <li><a href="{{ route('goals.index') }}">Lista de Conquistas</a></li>
+                    <li><a href="{{ route('goals.create') }}">Cadastrar Conquista</a></li>
                     
                     <li><a href="{{ route('deal.create') }}">Realizar Transação</a></li>
                 </ul>
