@@ -14,12 +14,15 @@ class CreateRulesToRestrictsTable extends Migration
     public function up()
     {
         Schema::create('rules_to_restricts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id',32);
+            $table->string('cnpj', 14);
             $table->string('name',40);
-            $table->integer('idTypeRestrict')->unsigned();;
+            $table->string('idTypeRestrict',32);
             $table->integer('amount');
             $table->timestamps();
             $table->foreign('idTypeRestrict')->references('id')->on('type_restricts');
+            $table->foreign('cnpj')->references('cnpj')->on('users');
+            $table->primary('id');
         });
     }
 

@@ -14,15 +14,18 @@ class CreateGoalsTable extends Migration
     public function up()
     {
         Schema::create('goals', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id',32);
+            $table->string('cnpj', 14);
             $table->string('name', 40);
-            $table->integer('idRuleToAchieve')->unsigned();
-            $table->integer('idRuleToRestrict')->unsigned();
-            $table->integer('idRuleToAward')->unsigned();
+            $table->string('idRuleToAchieve',32);
+            $table->string('idRuleToRestrict',32);
+            $table->string('idRuleToAward',32);
             $table->timestamps();
             $table->foreign('idRuleToAchieve')->references('id')->on('rules_to_achieves');
             $table->foreign('idRuleToRestrict')->references('id')->on('rules_to_restricts');
             $table->foreign('idRuleToAward')->references('id')->on('rules_to_awards');
+            $table->foreign('cnpj')->references('cnpj')->on('users');
+            $table->primary('id');
         });
     }
 

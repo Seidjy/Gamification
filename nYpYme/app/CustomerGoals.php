@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerGoals extends Model
 {
 	protected $fillable = [
-        'idGoals', 'idCustomers', 'amount',
+        'idGoals', 'idCustomers', 'amount', 'cnpj',
     ];
 
     public function customer()
@@ -17,5 +17,9 @@ class CustomerGoals extends Model
     public function goal()
     {
         return $this->hasOne('App\Goal');
+    }
+    public function user()
+    {
+        return $this->hasOne('App\User');
     }
 }

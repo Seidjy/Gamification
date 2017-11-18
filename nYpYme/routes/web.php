@@ -14,7 +14,12 @@
 Route::get('/', function () {
     return view('home');
 });
-
+Route::get('/deal/createbyvalue', function () {
+        return view('deals/transacao_def');
+    });
+Route::get('/deal/createbygoal', function () {
+        return view('deals/transacao_def');
+    });
 /*
 Route::get('/goals', function () {
     return view('evento_list');
@@ -39,3 +44,7 @@ Route::resource('restricts','RulesToRestrictsController');
 
 Route::resource('customers','CustomerController');
 
+//Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

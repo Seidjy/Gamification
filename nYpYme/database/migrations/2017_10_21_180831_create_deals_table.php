@@ -14,13 +14,16 @@ class CreateDealsTable extends Migration
     public function up()
     {
         Schema::create('deals', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idCustomer')->unsigned();;
-            $table->integer('idTypeTransactions')->unsigned();;
+            $table->string('id',32);
+            $table->string('cnpj', 14);
+            $table->string('idCustomer', 32);
+            $table->string('idTypeTransactions',32);
             $table->integer('amount');
             $table->timestamps();
             $table->foreign('idCustomer')->references('id')->on('customers');
             $table->foreign('idTypeTransactions')->references('id')->on('type_transactions');
+            $table->foreign('cnpj')->references('cnpj')->on('users');
+            $table->primary('id');
         });
     }
 

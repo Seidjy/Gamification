@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Deal extends Model
 {
     protected $fillable = [
-        'idCustomer','idTypeTransactions', 'amount',
+        'idCustomer','idTypeTransactions', 'amount','cnpj',
     ];
 
     public function customer()
@@ -17,6 +17,10 @@ class Deal extends Model
     public function type_transaction()
     {
         return $this->hasOne('App\TypeTransaction');
+    }
+    public function user()
+    {
+        return $this->hasOne('App\User');
     }
 }
  ?>

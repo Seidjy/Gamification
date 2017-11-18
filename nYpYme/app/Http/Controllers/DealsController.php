@@ -117,7 +117,7 @@ class DealsController extends Controller
     }
 
     //criar por valor
-    protected function createByValue()
+    protected function create()
     {
         return view('deals.transacao_def');
     }

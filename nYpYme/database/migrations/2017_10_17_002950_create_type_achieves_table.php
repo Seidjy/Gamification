@@ -14,9 +14,12 @@ class CreateTypeAchievesTable extends Migration
     public function up()
     {
         Schema::create('type_achieves', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id',32);
+            $table->string('cnpj', 14);
             $table->string('name', 40);
             $table->timestamps();
+            $table->foreign('cnpj')->references('cnpj')->on('users');
+            $table->primary('id');
         });
     }
 

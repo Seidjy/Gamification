@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TypeAchieve extends Model
+class Prize extends Model
 {
     protected $fillable = [
-        'name','cnpj',
+        'id', 'name', 'cnpj', 'price',
     ];
+
     public function user()
     {
         return $this->hasOne('App\User');
