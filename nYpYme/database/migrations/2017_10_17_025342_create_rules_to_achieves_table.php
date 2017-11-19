@@ -17,7 +17,7 @@ class CreateRulesToAchievesTable extends Migration
             $table->string('id',32);
             $table->string('cnpj', 14);
             $table->string('name',40);
-            $table->string('idTypeAchieve',32);
+            $table->integer('idTypeAchieve')->unsigned();
             $table->integer('amount');
             $table->boolean('gather');
             $table->timestamps();

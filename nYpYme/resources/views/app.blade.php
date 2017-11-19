@@ -35,19 +35,40 @@
                             <li><a href="{{ route('login') }}">Logar</a></li>
                             <li><a href="{{ route('register') }}">Registrar</a></li>
                         @else
+                            
+                            <li class="dropdown">
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                            Conquistas <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{ route('achieve.create') }}">Cadastrar Regras para Conquistar</a></li>
+                                            <li><a href="{{ route('restricts.create') }}">Cadastrar Regras para Limitar</a></li>
+                                            <li><a href="{{ route('awards.create') }}">Cadastrar Regras para Premiar</a></li>
+                                            <li><a href="{{ route('goals.index') }}">Lista de Conquistas</a></li>
+                                            <li><a href="{{ route('goals.create') }}">Cadastrar Conquista</a></li>
+                                        </ul>                                        
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                            Transações <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{ route('deal.create') }}">Realizar Transação</a></li>
+                                        </ul>                                        
+                                    </li>
+                            </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            Deslogar
                                         </a>
-
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
@@ -55,10 +76,6 @@
                                 </ul>
                             </li>
                         @endguest
-                    <li><a href="{{ route('goals.index') }}">Lista de Conquistas</a></li>
-                    <li><a href="{{ route('goals.create') }}">Cadastrar Conquista</a></li>
-                    
-                    <li><a href="{{ route('deal.create') }}">Realizar Transação</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

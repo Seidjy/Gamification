@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerGoals extends Model
 {
 	protected $fillable = [
-        'idGoals', 'idCustomers', 'amount', 'cnpj',
+        'id', 'idGoals', 'idCustomers', 'amount', 'cnpj',
     ];
 
     public function customer()

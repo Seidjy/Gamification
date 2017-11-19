@@ -8,7 +8,7 @@ class RulesToRestrict extends Model
 {
 	protected $table = 'rules_to_restricts';
     protected $fillable = [
-        'name','idTypeRestrict','amount','cnpj',
+        'id', 'name','idTypeRestrict','amount','cnpj',
     ];
 
     public function type_restrict()

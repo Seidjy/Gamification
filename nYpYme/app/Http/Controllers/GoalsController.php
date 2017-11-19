@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Goal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GoalsController extends Controller
 {
@@ -36,14 +37,25 @@ class GoalsController extends Controller
     //store
     protected function store(Request $request)
     {
-        $goal = Goal::create($request->all());
+        $id = md5($request['cnpj']+$request['name']);
+        $goal = Goal::create([
+            'id' => $id,
+            'name' => $request['name'],
+            'cnpj' => Auth::user()->cnpj,
+            'idRuleToAchieve' => $request['idRuleToAchieve'],
+            'idRuleToRestrict' => $request['idRuleToRestrict'],
+            'idRuleToAward' => $request['idRuleToAward'],
+        ]);
 
         $customers = DB::table('customers')->get();
-
+        
+        $id = hash($request['cnpj']+$request['name']);
+        
         foreach ($customers as $customer) {
            DB::table('customer_goals')->insert([
                 'idGoals' => $goal->id,
                 'idCustomers' => $customer->id,
+                'cnpj' => $request->user()->cnpj;
                 'amountRestrict' => 0,
                 'amountStored' => 0,
                 'created_at' => strtotime('01-01-2008'),

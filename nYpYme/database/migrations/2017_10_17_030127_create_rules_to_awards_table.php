@@ -17,7 +17,7 @@ class CreateRulesToAwardsTable extends Migration
             $table->string('id',32);
             $table->string('cnpj', 14);
             $table->string('name',40);
-            $table->string('idTypeAward', 32);
+            $table->integer('idTypeAward')->unsigned();
             $table->integer('amount');
             $table->timestamps();
             $table->foreign('idTypeAward')->references('id')->on('type_awards');

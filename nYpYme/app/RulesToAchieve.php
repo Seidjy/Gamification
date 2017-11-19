@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class RulesToAchieve extends Model
 {
+    protected $table = 'rules_to_achieves';
     protected $fillable = [
-        'name', 'idTypeAchieve', 'amount', 'gather','cnpj',
+        'id', 'name', 'idTypeAchieve', 'amount', 'gather','cnpj',
     ];
     public function type_achieve()
     {

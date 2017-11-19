@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\RulesToRestrict;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RulesToRestrictsController extends Controller
 {
@@ -24,7 +25,14 @@ class RulesToRestrictsController extends Controller
     //store
     protected function store(Request $request)
     {
-	        RulesToRestrict::create($request->all());
+            $id = md5($request['cnpj']+$request['name']);  
+	        RulesToRestrict::create([
+                'id' => $id,
+                'cnpj' => Auth::user()->cnpj;
+                'name' => $request['name'],
+                'idTypeRestrict' => $request['idTypeRestrict'],
+                'amount' => $request['amount'],
+            ]);
 	        return redirect()->route('home.index');
 	}
 

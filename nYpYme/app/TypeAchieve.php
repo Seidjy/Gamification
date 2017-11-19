@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TypeAchieve extends Model
 {
     protected $fillable = [
-        'name','cnpj',
+        'id', 'name','cnpj',
     ];
     public function user()
     {

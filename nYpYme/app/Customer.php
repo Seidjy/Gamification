@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
 	protected $fillable = [
-        'cpf', 'endereco', 'points','cnpj',
+        'id', 'cpf', 'name', 'points','cnpj',
     ];
     public function user()
     {

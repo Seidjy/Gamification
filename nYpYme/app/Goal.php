@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Goal extends Model
 {
     protected $fillable = [
-        'name', 'idRuleToAchieve', 'idRuleToRestrict', 'idRuleToAward','cnpj',
+        'id', 'name', 'idRuleToAchieve', 'idRuleToRestrict', 'idRuleToAward','cnpj',
     ];
 
     public function rules_to_achieve()

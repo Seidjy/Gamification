@@ -31,6 +31,7 @@ class DealsController extends Controller
         $customerPoints = $customer->points;
         $deal = Deal::create([
             'idCustomer' => $customer->id,
+            'cnpj' => $request->user()->cnpj,
             'idTypeTransactions' => 1,
             'amount' => $data->input('amount'),
             'updated_at' => $data->input('updated_at'),
@@ -113,8 +114,12 @@ class DealsController extends Controller
         }
 
         $customerPoints = $customer->points;
+
+        return $customer;
         
     }
+
+
 
     //criar por valor
     protected function create()
@@ -130,7 +135,7 @@ class DealsController extends Controller
     }
 
     protected function storeByGoal(Request $request){
-        $this->storeCustomer();
+        $customer = $this->storeCustomer($request);
     }
 
     protected function add()

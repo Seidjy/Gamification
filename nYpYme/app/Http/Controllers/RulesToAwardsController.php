@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\RulesToAward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RulesToAwardsController extends Controller
 {
 	//index
 	protected function index()
     {
-	        $data = RulesToAward::latest()->paginate(5);
-	        return view('awards.index', compact('data'));
+	   return view('awards.index');
 
 	}
 	//create
@@ -25,8 +25,15 @@ class RulesToAwardsController extends Controller
     //store
     protected function store(Request $request)
     {
-	        RulesToAward::create($request->all());
-	        return redirect()->route('home.index');
+        $id = md5($request['cnpj']+$request['name']);
+	    RulesToAward::create([
+            'id' => $id,
+            'cnpj' => Auth::user()->cnpj;
+            'name' => $request['name'],
+            'idTypeAward' => $request['idTypeAward'],
+            'amount' => $request['amount'],
+        ]);
+	    return redirect()->route('home.index');
 
 	}
 

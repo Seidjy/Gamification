@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\RulesToAchieve;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RulesToAchievesController extends Controller
 {
@@ -23,8 +24,16 @@ class RulesToAchievesController extends Controller
     //store
     protected function store(Request $request)
     {
-        RulesToAchieve::create($request->all());
-            return redirect()->route('home.index');
+        $id = md5($request['cnpj']+$request['name']);
+        RulesToAward::create([
+            'id' => $id,
+            'cnpj' => $request->user()->cnpj,
+            'name' => $request['name'],
+            'idTypeAchieve' => $request['idTypeAchieve'],
+            'amount' => $request['amount'],
+            'gather' => $request['gather'],
+        ]);
+        return redirect()->route('home.index');
 	}
     //show
     protected function show($id)

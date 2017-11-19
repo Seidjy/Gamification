@@ -20,37 +20,57 @@ class CustomerController extends Controller
      //store
     protected function store(Request $request)
     {
-        Customer::create($request->all());
-
-        $goals = DB::table('goals')->get();
-
-        foreach ($goals as $goal) {
-           DB::table('users')->insert([
+        $id = md5(($request['cnpj']+$request['name']), ;
+        Customer::create([
                 'idGoals' => $goal->id,
                 'idCustomers' => $customer->id,
                 'amountRestrict' => 0,
                 'amountStored' => 0,
             ]);
+
+        $goals = DB::table('goals')->get();
+
+        foreach ($goals as $goal) {
+            DB::table('customer_goals')->insert([
+                'idGoals' => $goal->id,
+                'idCustomers' => $customer->id,
+                'cnpj' => $request->user()->cnpj;
+                'amountRestrict' => 0,
+                'amountStored' => 0,
+                'created_at' => strtotime('01-01-2008'),
+                'updated_at' => strtotime('01-01-2008'),
+            ]
+            );
         }
         return redirect()->route('customers.index')
                 ->with('success','customers created successfully');
     }
 
     public static function addCustomer($cpf, $name){
+        $id = md5(($request['cnpj']+$request['name']);
         $customer = Customer::create([
+            'id' => $id,
             'cpf' => $cpf,
             'name' => $name,
+            'cnpj' => $request->user()->cnpj,
+            'amountRestrict' => 0,
+            'amountStored' => 0,
         ]);
 
         $goals = DB::table('goals')->get();
 
+        $idCustomerGoal = md5(($request['cnpj']+$request['name']);
         foreach ($goals as $goal) {
-           DB::table('users')->insert([
+            DB::table('customer_goals')->insert([
                 'idGoals' => $goal->id,
                 'idCustomers' => $customer->id,
+                'cnpj' => $request->user()->cnpj;
                 'amountRestrict' => 0,
                 'amountStored' => 0,
-            ]);
+                'created_at' => strtotime('01-01-2008'),
+                'updated_at' => strtotime('01-01-2008'),
+            ]
+            );
         }
         return $customer;
     }

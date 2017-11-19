@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RulesToAward extends Model
 {
     protected $fillable = [
-        'name','idTypeAward','amount','cnpj',
+        'id', 'name', 'idTypeAward','amount','cnpj',
     ];
     public function type_award()
     {

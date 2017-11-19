@@ -9,7 +9,7 @@ class TypeRestrict extends Model
 	protected $table = 'type_restricts';
 
     protected $fillable = [
-        'name','cnpj',
+        'id', 'name','cnpj',
     ];
 
     public function rules_to_restrict()
