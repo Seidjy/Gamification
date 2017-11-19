@@ -9,7 +9,7 @@ class CustomerController extends Controller
 {
     protected function index()
     {
-        $members = DB::table('customers')->get();
+        $members = DB::table('customers')->where('cnpj',Auth::user()->cnpj)->get();
         return view('customers.index',['clientes' => $members]);
     }
     //create
@@ -28,7 +28,7 @@ class CustomerController extends Controller
                 'amountStored' => 0,
             ]);
 
-        $goals = DB::table('goals')->get();
+        $goals = DB::table('goals')->where('cnpj',Auth::user()->cnpj)->get();
 
         foreach ($goals as $goal) {
             DB::table('customer_goals')->insert([
@@ -57,7 +57,7 @@ class CustomerController extends Controller
             'amountStored' => 0,
         ]);
 
-        $goals = DB::table('goals')->get();
+        $goals = DB::table('goals')->where('cnpj',Auth::user()->cnpj)->get();
 
         $idCustomerGoal = md5(($request['cnpj']+$request['name']);
         foreach ($goals as $goal) {

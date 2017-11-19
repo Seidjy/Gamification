@@ -12,7 +12,7 @@ class GoalsController extends Controller
     //index
     protected function index()
     {
-        $goals = DB::table('goals')->get();
+        $goals = DB::table('goals')->where('cnpj',Auth::user()->cnpj)->get();
 
         return view('goals.evento_list', ['goals' => $goals]);
     }
@@ -21,11 +21,11 @@ class GoalsController extends Controller
     
     protected function create(){
 
-        $achieves = DB::table('rules_to_achieves')->get();
+        $achieves = DB::table('rules_to_achieves')->where('cnpj',Auth::user()->cnpj)->get();
 
-        $restricts = DB::table('rules_to_restricts')->get();
+        $restricts = DB::table('rules_to_restricts')->where('cnpj',Auth::user()->cnpj)->get();
 
-        $awards = DB::table('rules_to_awards')->get();
+        $awards = DB::table('rules_to_awards')->where('cnpj',Auth::user()->cnpj)->get();
 
         return view('goals.evento_cadastro',[
             'awards' => $awards,
@@ -47,7 +47,7 @@ class GoalsController extends Controller
             'idRuleToAward' => $request['idRuleToAward'],
         ]);
 
-        $customers = DB::table('customers')->get();
+        $customers = DB::table('customers')->where('cnpj',Auth::user()->cnpj)->get();
         
         $id = hash($request['cnpj']+$request['name']);
         
@@ -64,7 +64,7 @@ class GoalsController extends Controller
             );
         }
 
-        $goals = DB::table('goals')->get();
+        $goals = DB::table('goals')->where('cnpj',Auth::user()->cnpj)->get();
 
         return view('goals.evento_list', ['goals' => $goals]);
     }

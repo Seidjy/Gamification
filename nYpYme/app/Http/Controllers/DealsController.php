@@ -6,6 +6,7 @@ use App\Deal;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 //Transações
 
@@ -23,10 +24,7 @@ class DealsController extends Controller
 
         //PRECISA PERMITIR COMPLETAR VÁRIAS VEZES A MESMA META
         $cpf = $data->input('cpf');
-        $customer = DB::table('customers')->where('cpf', $cpf)->first();
-        if (!$customer) {
-            $customer = CustomerController::addCustomer($cpf, "");
-        }
+        $customer = $this->storeCustomer($data);
 
         $customerPoints = $customer->points;
         $deal = Deal::create([
@@ -102,7 +100,7 @@ class DealsController extends Controller
                 }
             //}           
         }
-        $customers = DB::table('customers')->get();
+        $customers = DB::table('customers')->where('cnpj',Auth::user()->cnpj)->get();
         return redirect()->route('customers.index');
     }
 
