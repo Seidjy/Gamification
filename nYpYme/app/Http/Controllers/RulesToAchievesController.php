@@ -24,16 +24,19 @@ class RulesToAchievesController extends Controller
     //store
     protected function store(Request $request)
     {
-        $id = md5($request['cnpj']+$request['name']);
-        RulesToAward::create([
+        $cnpj = Auth::user()->cnpj;
+        $name = $request["name"];
+
+        $id = md5("$name$cnpj");
+        RulesToAchieve::create([
             'id' => $id,
-            'cnpj' => $request->user()->cnpj,
-            'name' => $request['name'],
+            'cnpj' => $cnpj,
+            'name' => $name,
             'idTypeAchieve' => $request['idTypeAchieve'],
             'amount' => $request['amount'],
             'gather' => $request['gather'],
         ]);
-        return redirect()->route('home.index');
+        return view('home');
 	}
     //show
     protected function show($id)

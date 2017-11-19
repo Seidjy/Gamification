@@ -27,7 +27,7 @@ class GoalsController extends Controller
     //store
     protected function store(Request $request)
     {
-        $id = md5($request['cnpj']+$request['name']);
+        $id = md5("$request['cnpj']"+"$request['name']");
         $prize = Prize::create([
             'id' => $id,
             'name' => $request['name'],
@@ -35,7 +35,7 @@ class GoalsController extends Controller
             'price' => $request['price'],
         ]);
 
-        
+
         $prizes = DB::table('prizes')->where('cnpj',Auth::user()->cnpj)->get();
         return view('prizes.evento_list', ['prizes' => $prizes]);
     }

@@ -49,7 +49,7 @@ class GoalsController extends Controller
 
         $customers = DB::table('customers')->where('cnpj',Auth::user()->cnpj)->get();
         
-        $id = hash($request['cnpj']+$request['name']);
+        $id = md5("$request['cnpj']"+"$request['name']");
         
         foreach ($customers as $customer) {
            DB::table('customer_goals')->insert([

@@ -25,15 +25,17 @@ class RulesToRestrictsController extends Controller
     //store
     protected function store(Request $request)
     {
-            $id = md5($request['cnpj']+$request['name']);  
+            $cnpj = Auth::user()->cnpj;
+            $name = $request["name"];
+            $id = md5("$name$cnpj");  
 	        RulesToRestrict::create([
                 'id' => $id,
-                'cnpj' => Auth::user()->cnpj;
-                'name' => $request['name'],
+                'cnpj' => $cnpj,
+                'name' => $name,
                 'idTypeRestrict' => $request['idTypeRestrict'],
                 'amount' => $request['amount'],
             ]);
-	        return redirect()->route('home.index');
+	        return view('home');
 	}
 
     //show

@@ -28,6 +28,7 @@ class DealsController extends Controller
 
         $customerPoints = $customer->points;
         $deal = Deal::create([
+            
             'idCustomer' => $customer->id,
             'cnpj' => $request->user()->cnpj,
             'idTypeTransactions' => 1,
@@ -106,7 +107,10 @@ class DealsController extends Controller
 
     protected function storeCustomer(Request $data){
         $cpf = $data->input('cpf');
-        $customer = DB::table('customers')->where('cpf', $cpf)->first();
+        $customer = DB::table('customers')->where([
+            ['cpf', $cpf],
+            ['cnpj', Auth::user()->cnpj],
+        ])->first();
         if (!$customer) {
             $customer = CustomerController::addCustomer($cpf, "");
         }
@@ -134,6 +138,10 @@ class DealsController extends Controller
 
     protected function storeByGoal(Request $request){
         $customer = $this->storeCustomer($request);
+
+        $customerGoals = DB::table('customer_goals')->where('idCustomers', '=', $customer->id)->get();
+
+
     }
 
     protected function add()

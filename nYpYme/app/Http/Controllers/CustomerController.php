@@ -47,7 +47,7 @@ class CustomerController extends Controller
     }
 
     public static function addCustomer($cpf, $name){
-        $id = md5(($request['cnpj']+$request['name']);
+        $id = md5("($request['cnpj']+$request['name']");
         $customer = Customer::create([
             'id' => $id,
             'cpf' => $cpf,
