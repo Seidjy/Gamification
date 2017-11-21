@@ -22,27 +22,30 @@ class DealsController extends Controller
     protected function store(Request $data)
     {
 
-        //PRECISA PERMITIR COMPLETAR VÁRIAS VEZES A MESMA META
-        $cpf = $data->input('cpf');
         $customer = $this->storeCustomer($data);
 
-        $customerPoints = $customer->points;
+        $cpf = $customer->cpf;
+
+        $cnpj = Auth::user()->cnpj;
+
+        $customerPoints = $customer->points;        
+
         $deal = Deal::create([
-            
             'idCustomer' => $customer->id,
-            'cnpj' => $request->user()->cnpj,
+            'cnpj' => Auth::user()->cnpj,
             'idTypeTransactions' => 1,
             'amount' => $data->input('amount'),
             'updated_at' => $data->input('updated_at'),
             'created_at' => $data->input('created_at'),
         ]);
 
-        $customerGoals = DB::table('customer_goals')->where('idCustomers', '=', $customer->id)->get();
+
+        $customerGoals = DB::table('customer_goals')->where('idCustomers', $customer->id)->get();
 
         foreach ($customerGoals as $customerGoal) {
             $customerGoalsAmountRestrict = $customerGoal->amountRestrict;
             $customerGoalsAmountStored = 0;
-            $goal = DB::table('goals')->where('id', '=', $customerGoal->idGoals)->first();
+            $goal = DB::table('goals')->where('id', $customerGoal->idGoals)->first();
          //   foreach ($goals as $goal) {
                 $idRuleToRestrict = $goal->idRuleToRestrict;
                 $ruleToRestrict = DB::table('rules_to_restricts')->where('id', $idRuleToRestrict)->first();
@@ -68,7 +71,7 @@ class DealsController extends Controller
                             $customerPoints = $customerPoints + $awards->amount;
 
                             DB::table('customers')
-                            ->where('cpf', $cpf)
+                            ->where('id', $customer->id)
                             ->update(['points' => $customerPoints]);
                         }else{
                             $customerGoalsAmountStored = $data->input('amount');
@@ -105,23 +108,28 @@ class DealsController extends Controller
         return redirect()->route('customers.index');
     }
 
+    protected function verifyDate(){
+
+    }
+
     protected function storeCustomer(Request $data){
         $cpf = $data->input('cpf');
         $customer = DB::table('customers')->where([
             ['cpf', $cpf],
             ['cnpj', Auth::user()->cnpj],
         ])->first();
-        if (!$customer) {
-            $customer = CustomerController::addCustomer($cpf, "");
-        }
 
-        $customerPoints = $customer->points;
+        if (!$customer) {
+            CustomerController::addCustomer($cpf, "");
+            $customer = DB::table('customers')->where([
+                ['cpf', $cpf],
+                ['cnpj', Auth::user()->cnpj],
+            ])->first();
+        }
 
         return $customer;
         
     }
-
-
 
     //criar por valor
     protected function create()
@@ -133,14 +141,54 @@ class DealsController extends Controller
 
     protected function createbyGoal()
     {
-        return view('deals.transacao_def2');
+        return view('deals.transacao_def_debito');
     }
 
     protected function storeByGoal(Request $request){
         $customer = $this->storeCustomer($request);
+        $customerPoints = $customer->points;
 
-        $customerGoals = DB::table('customer_goals')->where('idCustomers', '=', $customer->id)->get();
+        $deal = Deal::create([
+            'idCustomer' => $customer->id,
+            'cnpj' => Auth::user()->cnpj,
+            'idTypeTransactions' => 1,
+            'idGoals' => $data['idGoals'],
+            'updated_at' => $data->input('updated_at'),
+            'created_at' => $data->input('created_at'),
+        ]);
 
+        $goal = DB::table('goals')->where('id', $data['idGoals'])->first();
+        $award = DB::table('rules_to_awards')->where('id', $goal->idRuleToAward)->first();
+
+        $customerPoints += $award->amount;
+
+        DB::table('customers')
+            ->where('id', $customer->id)
+            ->update(['points' => $customerPoints]);
+    }
+
+    protected function debit(){
+        return view('deals.debit');
+    }
+
+    protected function storeDebit(Request $request){
+        $customer = $this->storeCustomer($request);
+        $customerPoints = $customer->points;
+        $deal = Deal::create([
+            'idCustomer' => $customer->id,
+            'cnpj' => Auth::user()->cnpj,
+            'idTypeTransactions' => 2,
+            'idPrize' => $data['idPrize'],
+            'updated_at' => $data->input('updated_at'),
+            'created_at' => $data->input('created_at'),
+        ]);
+
+        $prize = DB::table('prizes')->where('id', $data['idPrize'])->first();
+        $customerPoints -= $prize->price;
+
+        DB::table('customers')
+            ->where('id', $customer->id)
+            ->update(['points' => $customerPoints]);
 
     }
 

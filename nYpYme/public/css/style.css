@@ -26,7 +26,7 @@ p { font-family: 'Open Sans', sans-serif; }
 ------ SECTION GLOBAL
 ===============================================================*/
 body {
-	background-color: #2296F3;
+	background-color: #caccce;
 }
 .navbar-default {
 	background-color: #fafafa;
@@ -70,19 +70,33 @@ body {
 h1.titulo {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 4.2em;
-	color: #fafafa;
+	color: #000000;
 	text-align: center;
-	margin-top: 19%;
+	margin-top: 17%;
 	margin-bottom: 30px;
 }
 h2.titulo {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 2em;
-	color: #fafafa;
+	color: #131313;
 	text-align: center;
 	margin-top: 8%;
 	margin-bottom: 30px;
 }
+.sub-title h2 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.4em;
+	color: #131313;
+	text-align: center;
+	margin-bottom: 20px;
+}.sub-title p {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1em;
+	color: #444444;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
 .list-group.margem {
 	width: 50%;
 	margin-right: auto;
@@ -182,6 +196,8 @@ select {
 	-ms-transition: all 0.6s ease;
 	transition: all 0.6s ease;
 }
+
+
 .btn-primary.btn-contact:active,
 .btn-primary.btn-contact.active {
 	color: #ffffff;

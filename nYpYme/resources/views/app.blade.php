@@ -87,7 +87,7 @@
 
     <div class="container">
         <footer class="navbar navbar-default navbar-fixed-bottom">
-            <p><span>NyPyme</span> - Desenvolvido Por: Nathália Adriele, Seidjy e Tamara</p>
+            <p><span>© NyPyme</span> Todos os direitos reservados.</p>
         </footer>
     </div>
 

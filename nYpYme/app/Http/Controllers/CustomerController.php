@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -20,51 +21,34 @@ class CustomerController extends Controller
      //store
     protected function store(Request $request)
     {
-        $id = md5(($request['cnpj']+$request['name']), ;
-        Customer::create([
-                'idGoals' => $goal->id,
-                'idCustomers' => $customer->id,
-                'amountRestrict' => 0,
-                'amountStored' => 0,
-            ]);
-
-        $goals = DB::table('goals')->where('cnpj',Auth::user()->cnpj)->get();
-
-        foreach ($goals as $goal) {
-            DB::table('customer_goals')->insert([
-                'idGoals' => $goal->id,
-                'idCustomers' => $customer->id,
-                'cnpj' => $request->user()->cnpj;
-                'amountRestrict' => 0,
-                'amountStored' => 0,
-                'created_at' => strtotime('01-01-2008'),
-                'updated_at' => strtotime('01-01-2008'),
-            ]
-            );
-        }
-        return redirect()->route('customers.index')
-                ->with('success','customers created successfully');
+        
     }
 
     public static function addCustomer($cpf, $name){
-        $id = md5("($request['cnpj']+$request['name']");
+        $cnpj = Auth::user()->cnpj;
+        $id = md5("$cpf$cnpj");
         $customer = Customer::create([
             'id' => $id,
             'cpf' => $cpf,
-            'name' => $name,
-            'cnpj' => $request->user()->cnpj,
-            'amountRestrict' => 0,
-            'amountStored' => 0,
+            'name' => "",
+            'cnpj' => $cnpj,
+            'points' => 0,
         ]);
 
-        $goals = DB::table('goals')->where('cnpj',Auth::user()->cnpj)->get();
+        $customer = DB::table('customers')->where([
+            ['cpf', $cpf],
+            ['cnpj', Auth::user()->cnpj],
+        ])->first();
 
-        $idCustomerGoal = md5(($request['cnpj']+$request['name']);
+        $goals = DB::table('goals')->where('cnpj',Auth::user()->cnpj)->get();
+        
         foreach ($goals as $goal) {
+            $idCustomerGoal = md5("$cnpj$goal->id$customer->id");
             DB::table('customer_goals')->insert([
+                'id' => $idCustomerGoal,
                 'idGoals' => $goal->id,
                 'idCustomers' => $customer->id,
-                'cnpj' => $request->user()->cnpj;
+                'cnpj' => $cnpj,
                 'amountRestrict' => 0,
                 'amountStored' => 0,
                 'created_at' => strtotime('01-01-2008'),

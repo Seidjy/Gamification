@@ -19,7 +19,7 @@
     </div>
 
     <div class="form-group form-contact{{ $errors->has('email') ? ' has-error' : '' }}">
-        <label for="email" class="col-md-4 control-label">CNPJ</label>
+        <label for="cnpj" class="col-md-4 control-label">CNPJ</label>
         <input  type="number" maxlength="14" class="form-control" name="cnpj" value="{{ old('cnpj') }}" required>
         @if ($errors->has('email'))
             <span class="help-block">
@@ -53,6 +53,6 @@
         <label for="password-confirm" class="col-md-4 control-label">Confirmar Senha</label>
             <input  type="password" class="form-control" name="password_confirmation" required>
     </div>
-    <button type="submit" class="btn btn-primary btn-contact btn-block">Register</button>
+    <button type="submit" class="btn btn-primary btn-contact btn-block">Registrar</button>
 </form>
 @endsection
